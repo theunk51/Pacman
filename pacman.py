@@ -1,16 +1,16 @@
 import pygame
+'''
+Displacement formula
+s = ut + 1/2(a)^2
 
-
-
-class Player():
-  def __init__(self):
-    pass
-
+a = acceleration		s = displacement
+u = velocity				t = time
+'''
 
 class Pacman(pygame.sprite.Sprite):
   def __init__(self):
     #Player.__init__(self, 4, 5, 13, 12, (255, 255, 0))
-    super().__init__(self)
+    super().__init__()
     self.image = pygame.image.load("pacman.png").convert()
     self.image.set_colorkey((0, 0, 0))
     self.rect = self.image.get_rect() # updates x and y
