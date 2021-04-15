@@ -1,5 +1,5 @@
 # Notes
-### Objects
+### Objects (Classes)
 - [ ] the map
 - [ ] the ghosts
 - [ ] pacman
