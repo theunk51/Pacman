@@ -1,53 +1,19 @@
 import pygame
-
-
+import matplotlib.pyplot as plt
 # creates a game Windows
+''''
 BLACK = (0, 0, 0)
 WHITE = (255,255, 255)
 width, height = 500, 500
 screen = pygame.display.set_mode((width, height))
 screen.fill(BLACK)
 
-class Pacman(pygame.sprite.Sprite):
-  '''represents pacman '''
-  def __init__(self):
-    pygame.sprite.Sprite.__init__(self)
-    self.name = "pacman"
-    # loads in the image
-    self.image = pygame.image.load('images/pacman.png').convert()
-    self.x, self.y = 50, 5
-    # gets the position of the image
-    self.rect = self.image.get_rect()
-    screen.blit(self.image, self.rect)
 
-
-  def move(self):
-    key = pygame.key.get_pressed()
-
-    if key[pygame.K_LEFT]:
-      self.x -= 4
-    elif key[pygame.K_RIGHT]:
-      self.x += 4
-    elif key[pygame.K_UP]:
-      self.y -= 4
-    elif key[pygame.K_DOWN]:
-      self.y += 4
-    
-    self.rect = (self.x, self.y, width, height)
-  
-  def update(self, screen, clock):
-    self.move()
-    clock.tick(75)
-    screen.fill(BLACK)
-    screen.blit(self.image, self.rect)
-    pygame.display.flip()
-    
 
 
 def main():
   clock = pygame.time.Clock()
   run = True
-  pm = Pacman()
 
   while run:
     # sets FPS
@@ -59,5 +25,44 @@ def main():
     pm.update(screen, clock)
     
 main()
+'''
+
+image_pos= []
+img = [] 
+
+class SpriteSheet:
+
+    def __init__(self, filename):
+        """Load the sheet."""
+        try:
+            self.sheet = pygame.image.load(filename).convert()
+        except pygame.error as e:
+            print(f"Unable to load spritesheet image: {filename}")
+            raise SystemExit(e)
 
 
+    def image_at(self, rectangle, colorkey = None):
+        """Load a specific image from a specific rectangle."""
+        # Loads image from x, y, x+offset, y+offset.
+        rect = pygame.Rect(rectangle)
+        image = pygame.Surface(rect.size).convert()
+        image.blit(self.sheet, (0, 0), rect)
+        if colorkey is not None:
+            if colorkey == -1:
+                colorkey = image.get_at((0,0))
+            image.set_colorkey(colorkey, pygame.RLEACCEL)
+        return image
+
+    def images_at(self, rects, colorkey = None):
+        """Load a whole bunch of images and return them as a list."""
+        return [self.image_at(rect, colorkey) for rect in rects]
+
+    def load_strip(self, rect, image_count, colorkey = None):
+        """Load a whole strip of images, and return them as a list."""
+        tups = [(rect[0]+rect[2]*x, rect[1], rect[2], rect[3])
+                for x in range(image_count)]
+        return self.images_at(tups, colorkey)
+
+ss = SpriteSheet('images/ghost-sheet.png')
+img = ss.image_at((12, 11, 44, 44), colorkey=(255, 255, 255))
+plt.imshow(img)

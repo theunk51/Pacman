@@ -8,27 +8,36 @@ u = velocity				t = time
 '''
 
 class Pacman(pygame.sprite.Sprite):
+  '''represents pacman '''
   def __init__(self):
-    #Player.__init__(self, 4, 5, 13, 12, (255, 255, 0))
-    super().__init__()
-    self.image = pygame.image.load("images/pacman.png").convert()
-    self.image.set_colorkey((0, 0, 0))
-    self.rect = self.image.get_rect() # updates x and y
-    pygame.gamedisplay.blit(self.image, (seld.))
-
-  def move_sprite(self):
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]:
-      self.x -= self.vel
-    elif keys[pygame.K_RIGHT]:
-      self.x += self.vel
-    elif keys[pygame.K_UP]:
-      self.y -= self.vel
-    elif keys[pygame.K_DOWN]:
-      self.y += self.vel
-
+    pygame.sprite.Sprite.__init__(self)
+    self.name = "pacman"
+    # loads in the image
+    self.image = pygame.image.load('images/pacman.png').convert()
+    self.x, self.y = 50, 5
+    # gets the position of the image
     self.rect = self.image.get_rect()
+    screen.blit(self.image, self.rect)
 
-  def draw(self, window):
-    pygame.draw.rect(window, self.image,)
+  # moves sprite
+  def move(self):
+    key = pygame.key.get_pressed()
+
+    if key[pygame.K_LEFT]:
+      self.x -= 4
+    elif key[pygame.K_RIGHT]:
+      self.x += 4
+    elif key[pygame.K_UP]:
+      self.y -= 4
+    elif key[pygame.K_DOWN]:
+      self.y += 4
+    
+    self.rect = (self.x, self.y, width, height)
   
+  def update(self, screen, clock):
+    self.move()
+    clock.tick(75)
+    screen.fill(BLACK)
+    screen.blit(self.image, self.rect)
+    pygame.display.flip()
+    

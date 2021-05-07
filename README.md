@@ -19,7 +19,7 @@
 
 ### Tips
 https://pacmancode.com/graphical-mazes
-
+https://dev.to/code2bits/pac-man-patterns--ghost-movement-strategy-pattern-1k1a
 
 # Project goals
 - learn how to use python with websockets
